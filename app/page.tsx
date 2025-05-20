@@ -4,10 +4,12 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import cn from "classnames";
+import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 
 import styles from "./page.module.css";
+import { useUsers } from "./queries/useUsers";
 
 import {
   Cross,
@@ -27,11 +29,32 @@ export default function HomePage() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
  // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
-  const { disconnect, connected, connecting } = useWallet();
+  const { publicKey, disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
+  const data = useUsers();
+  console.log(data);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
   };
+
+  const claim = async () => {
+    console.log(publicKey);
+    try {
+      const data = {
+        publicKey
+      }
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/claim`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any authentication headers if needed
+          // 'Authorization': 'Bearer your-token'
+        }
+      });
+      console.log(response);
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  }
   React.useEffect(() => {
     const checkConnection = async () => {
       try {
@@ -178,10 +201,11 @@ export default function HomePage() {
                   Dashboard
                 </p>
 
-                <p className={styles.dashboardInfoBalance}>100 Zkos</p>
+                <p className={styles.dashboardInfoBalance}>{data?.reward} Zkos</p>
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
+                  onClick={claim}
                 >
                   Claim Rewards
                 </button>
@@ -190,7 +214,7 @@ export default function HomePage() {
                   Total Rewards Earned All Time
                 </p>
 
-                <p className={styles.dashboardInfoValue}>7322 Zkos</p>
+                <p className={styles.dashboardInfoValue}>{data?.score} Points</p>
               </div>
 
               <div className={styles.dashboardWrapper}>
