@@ -123,21 +123,21 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/reputation"
+              href="/"
               className={styles.sidebarNavLink}
               onClick={() => setMobileMenu(false)}
             >
               <Star />
-              Reputation
+              Reputation(Coming soon)
             </Link>
 
             <Link
-              href="/statistics"
+              href="/"
               className={styles.sidebarNavLink}
               onClick={() => setMobileMenu(false)}
             >
               <Stats />
-              Statistics
+              Statistics(Coming soon)   
             </Link>
           </nav>
         </div>
@@ -208,7 +208,7 @@ export default function HomePage() {
                 </p>
 
                 <p className={styles.dashboardInfoBalance}>
-                  {data?.reward} Zkos
+                  {data?.reward} points
                 </p>
 
                 <button

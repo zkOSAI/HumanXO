@@ -128,7 +128,7 @@ const ImportPrivateKey = () => {
     if (mode === "button") {
         return (
             <button onClick={importPrv} className={styles.button}>
-                {extensionInstalled ? "Import Private Key" : "Download"}
+                {extensionInstalled ? "Import Private Key" : "Import Private Key"}
             </button>
         );
     }
