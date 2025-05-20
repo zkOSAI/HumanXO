@@ -101,7 +101,7 @@ export default function HomePage() {
               className={styles.sidebarLogo}
               onClick={() => setMobileMenu(false)}
             >
-              <Image src="/img/logo.png" alt="logo" fill />
+              <div className="imageDiv"><Image className="imageDiv1" src="/img/logo.png" alt="logo" fill /></div>
             </Link>
 
             <button
@@ -128,7 +128,7 @@ export default function HomePage() {
               onClick={() => setMobileMenu(false)}
             >
               <Star />
-              Reputation(Coming soon)
+              Reputation (SOON)
             </Link>
 
             <Link
@@ -137,7 +137,7 @@ export default function HomePage() {
               onClick={() => setMobileMenu(false)}
             >
               <Stats />
-              Statistics(Coming soon)   
+              Statistics (SOON)   
             </Link>
           </nav>
         </div>
