@@ -27,7 +27,7 @@ import ImportPrivateKey from "./component/importButton";
 
 export default function HomePage() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
- // const [connectedWallet, setConnectedWallet] = React.useState(false);
+  // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
   const { publicKey, disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
@@ -41,20 +41,26 @@ export default function HomePage() {
     console.log(publicKey);
     try {
       const data = {
-        publicKey
-      }
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/claim`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any authentication headers if needed
-          // 'Authorization': 'Bearer your-token'
+        publicKey,
+      };
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/claim`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Add any authentication headers if needed
+            // 'Authorization': 'Bearer your-token'
+          },
         }
-      });
-      console.log(response);
+      );
+      alert(response.data.message);
     } catch (err) {
-      console.error('Error:', err);
+        
+      console.error("Error:", err);
+      alert("Can't claim");
     }
-  }
+  };
   React.useEffect(() => {
     const checkConnection = async () => {
       try {
@@ -201,7 +207,9 @@ export default function HomePage() {
                   Dashboard
                 </p>
 
-                <p className={styles.dashboardInfoBalance}>{data?.reward} Zkos</p>
+                <p className={styles.dashboardInfoBalance}>
+                  {data?.reward} Zkos
+                </p>
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
@@ -214,7 +222,9 @@ export default function HomePage() {
                   Total Rewards Earned All Time
                 </p>
 
-                <p className={styles.dashboardInfoValue}>{data?.score} Points</p>
+                <p className={styles.dashboardInfoValue}>
+                  {data?.score} Points
+                </p>
               </div>
 
               <div className={styles.dashboardWrapper}>
@@ -257,7 +267,7 @@ export default function HomePage() {
                   >
                     Import Private Key
                   </button> */}
-                  <ImportPrivateKey/>
+                  <ImportPrivateKey />
                 </div>
               </div>
             </div>
@@ -327,7 +337,7 @@ export default function HomePage() {
 
                   <button
                     className={cn(styles.button, styles.downloadExtension)}
-                        onClick={ navigateToExtensionPage}
+                    onClick={navigateToExtensionPage}
                   >
                     Download Browser Extension
                   </button>
