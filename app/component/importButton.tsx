@@ -97,6 +97,7 @@ const ImportPrivateKey = () => {
         );
       } else {
         console.log("Invalid key");
+        setError("Invalid private key");
         return;
       }
 
