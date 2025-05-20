@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
+import WalletContextProvider from "./providers/WalletContextProvider";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-    title: "XO Dashboard",
+  title: "XO Dashboard",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-            <body>{children}</body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body>
+        <WalletContextProvider>{children}</WalletContextProvider>
+      </body>
+    </html>
+  );
 }
