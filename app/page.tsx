@@ -25,7 +25,7 @@ import ImportPrivateKey from "./component/importButton";
 
 export default function HomePage() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
-  const [connectedWallet, setConnectedWallet] = React.useState(false);
+ // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
   const { disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
