@@ -91,7 +91,9 @@ const ImportPrivateKey = () => {
                     }
                 );
             } else {
+                
                 console.log("Invalid key");
+                return;
             }
 
             const maskedKey = privateKey.substring(0, 4) + "..." + privateKey.substring(privateKey.length - 4);
