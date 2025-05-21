@@ -35,7 +35,7 @@ export default function HomePage() {
   const data = useUsers();
   console.log(data);
   const navigateToExtensionPage = () => {
-    window.open(`https://chrome.google.com/webstore`, "_blank");
+    window.open(`https://github.com/zkOSAI/HumanXO`, "_blank");
   };
   React.useEffect(() => {
     const checkConnection = async () => {
