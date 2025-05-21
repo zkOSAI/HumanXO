@@ -4,9 +4,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import cn from "classnames";
-import axios from "axios";
+import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { claim } from "./api/claim";
 
 import styles from "./page.module.css";
 import { useUsers } from "./queries/useUsers";
@@ -31,35 +32,11 @@ export default function HomePage() {
   const [mobileMenu, setMobileMenu] = React.useState(false);
   const { publicKey, disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
+  const pathname = usePathname();
   const data = useUsers();
   console.log(data);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
-  };
-
-  const claim = async () => {
-    console.log(publicKey);
-    try {
-      const data = {
-        publicKey,
-      };
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/claim`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            // Add any authentication headers if needed
-            // 'Authorization': 'Bearer your-token'
-          },
-        }
-      );
-      alert(response.data.message);
-    } catch (err) {
-        
-      console.error("Error:", err);
-      alert("Can't claim");
-    }
   };
   React.useEffect(() => {
     const checkConnection = async () => {
@@ -101,7 +78,14 @@ export default function HomePage() {
               className={styles.sidebarLogo}
               onClick={() => setMobileMenu(false)}
             >
-              <div className="imageDiv"><Image className="imageDiv1" src="/img/logo.png" alt="logo" fill /></div>
+              <div className="imageDiv">
+                <Image
+                  className="imageDiv1"
+                  src="/img/logo.png"
+                  alt="logo"
+                  fill
+                />
+              </div>
             </Link>
 
             <button
@@ -115,7 +99,10 @@ export default function HomePage() {
           <nav className={styles.sidebarNav}>
             <Link
               href="/"
-              className={cn(styles.sidebarNavLink, styles.active)}
+              className={cn(
+                styles.sidebarNavLink,
+                pathname === "/" && styles.active
+              )}
               onClick={() => setMobileMenu(false)}
             >
               <Home />
@@ -123,8 +110,11 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/"
-              className={styles.sidebarNavLink}
+              href="/reputation"
+              className={cn(
+                styles.sidebarNavLink,
+                pathname === "/reputation" && styles.active
+              )}
               onClick={() => setMobileMenu(false)}
             >
               <Star />
@@ -132,12 +122,15 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/"
-              className={styles.sidebarNavLink}
+              href="/statistics"
+              className={cn(
+                styles.sidebarNavLink,
+                pathname === "/statistics" && styles.active
+              )}
               onClick={() => setMobileMenu(false)}
             >
               <Stats />
-              Statistics (SOON)   
+              Statistics (SOON)
             </Link>
           </nav>
         </div>
@@ -213,7 +206,7 @@ export default function HomePage() {
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
-                  onClick={claim}
+                  onClick={() => claim(publicKey)}
                 >
                   Claim Rewards
                 </button>

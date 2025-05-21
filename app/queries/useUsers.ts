@@ -9,7 +9,7 @@ export const useUsers = () => {
     const { data} = useQuery({
         queryKey: ['users', publicKey],
         queryFn: () => getUser(publicKey),
-        refetchInterval: 60 * 1000,  // optional: poll every 10s
+        refetchInterval: 4 * 1000,  // optional: poll every 10s
         enabled: !!publicKey
     });
     if (data) { 
