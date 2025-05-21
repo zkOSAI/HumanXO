@@ -1,7 +1,7 @@
 import axios from "axios";
- 
+ import { PublicKey } from "@solana/web3.js"; 
 
-export const claim = async (publicKey: any) => {
+export const claim = async (publicKey: PublicKey | null) => {
     console.log(publicKey);
     try {
       const data = {

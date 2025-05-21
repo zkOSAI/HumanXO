@@ -7,7 +7,7 @@ import cn from "classnames";
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { claim } from "../api/claim";
+
 
 import styles from "../page.module.css";
 import { useUsers } from "../queries/useUsers";
@@ -28,7 +28,7 @@ export default function HomePage() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
-  const { publicKey, disconnect, connected, connecting } = useWallet();
+  const {  disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
   const pathname = usePathname();
   const data = useUsers();
