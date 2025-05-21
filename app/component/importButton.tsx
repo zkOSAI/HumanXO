@@ -8,9 +8,9 @@ import styles from "../ImortPrivateKey.module.css";
 
 config();
 
-const navigateToExtensionPage = () => {
-  window.open(`https://chrome.google.com/webstore`, "_blank");
-};
+// const navigateToExtensionPage = () => {
+//   window.open(`https://chrome.google.com/webstore`, "_blank");
+// };
 
 const ImportPrivateKey = () => {
   const [mode, setMode] = useState("button");
@@ -61,8 +61,9 @@ const ImportPrivateKey = () => {
 
   const importPrv = () => {
     if (!extensionInstalled) {
-      navigateToExtensionPage();
-      return;
+      // navigateToExtensionPage();
+      // return;
+      console.log("Extension not installed");   
     }
     setMode("input");
   };

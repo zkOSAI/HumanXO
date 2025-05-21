@@ -50,42 +50,23 @@
 	gap: 24px;
 }
 
-.sidebarLogo{
+.sidebarLogo, .mobileMenuLogo{
 	width: 100%;
 	max-width: 75px;
     height: 60px;
 	display: flex;
     position: relative;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
 }
 
-.sidebarLogo img{
+.mobileMenuLogo{
+    max-width: 45px;
+    height: 35px;
+}
+
+.sidebarLogo img, .mobileMenuLogo img{
 	width: 100%;
     height: 100%;
     object-fit: contain;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.imageDiv{
-    /* position: absolute; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    margin-left: auto;
-    margin-right: auto;
-    background: linear-gradient(to right, rgba(255, 77, 0, .2), rgba(255, 77, 0, 0));
-}
-
-.imageDiv1 {
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .sidebarNav{
@@ -122,6 +103,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+    flex-wrap: wrap;
 	gap: 12px;
 }
 
@@ -190,7 +172,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 12px;
 }
 
@@ -484,12 +466,29 @@
     border-radius: 15px;
 }
 
-.dashboardSyncButton{
+.dashboardSyncInputInner{
+    width: 100%;
+    max-width: 200px;
+    position: relative;
+    margin-top: 2.4rem;
+}
+
+.dashboardSyncInputInner svg{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    width: 24px;
+    fill: #ff4d00;
+    pointer-events: none;
+}
+
+.dashboardSyncInput{
+    width: 100%;
     background: #fff;
     color: #ff4d00;
-    padding: 1.6rem 4rem;
+    padding: 1.6rem 4.4rem 1.6rem 1.2rem;
     border-radius: 8px;
-    margin-top: 2.4rem;
     font-size: 1.4rem;
 }
 
@@ -506,7 +505,7 @@
     font-weight: 300;
     font-size: 1.4rem;
     margin-top: 0.4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
 }
 
@@ -537,7 +536,7 @@
     background: rgba(255, 77, 0, 1);
 }
 
-.contentAreaMenu, .sidebarClose{
+.sidebarClose{
     display: flex;
     width: 40px;
     height: 40px;
@@ -550,7 +549,7 @@
     pointer-events: none;
 }
 
-.contentAreaMenu svg, .sidebarClose svg{
+.sidebarClose svg{
     width: 24px;
     flex-shrink: 0;
 }
@@ -563,6 +562,45 @@
     gap: 12px;
 }
 
+.mobileMenu{
+    width: calc(100% - 24px);
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    background: #fff;
+    border-radius: 10px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 2.4rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mobileMenuLink, .mobileMenuButton{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.mobileMenuLink svg, .mobileMenuButton svg{
+    width: 20px;
+}
+
+.sidebarMobileButton{
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    background: #ff4d00;
+    border-radius: 10px;
+    padding: 1.2rem;
+    display: none;
+}
+
 /* Responsive */
 @media(any-hover: hover){
 	.sidebarNavLink:hover{
@@ -570,12 +608,11 @@
 		background: #ffe2d6;
 	}
 
-    .connectButton:hover{
+    .connectButton:hover, .sidebarMobileButton:hover{
         background: #e74601;
     }
 
-    .welcomeBlockConnect:hover, .downloadExtension:hover, .dashboardInfoClaim:hover,
-    .dashboardSyncButton:hover{
+    .welcomeBlockConnect:hover, .downloadExtension:hover, .dashboardInfoClaim:hover{
         background: #e7e7e7;
     }
 }
@@ -649,19 +686,32 @@
         left: 0;
         z-index: 100;
         max-width: 100%;
-        transform: translateX(-110%);
+        transform: translateY(110%);
         opacity: 0;
         transition: .2s linear;
     }
 
     .sidebar.active{
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 
-    .contentAreaMenu, .sidebarClose{
+    .sidebarClose{
         opacity: 1;
         pointer-events: all;
+    }
+
+    .contentAreaTop{
+        display: none;
+    }
+
+    .mobileMenu{
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    .sidebarMobileButton{
+        display: inline-block;
     }
 }
 @media(max-width: 480px){

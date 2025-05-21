@@ -18,7 +18,6 @@ import {
   Face,
   Home,
   Home2,
-  Menu,
   Moon,
   Star,
   Stats,
@@ -159,25 +158,42 @@ export default function HomePage() {
           <button className={cn(styles.button, styles.sidebarBottomMore)}>
             <Dots />
           </button>
+
+        
+          {connected ? (
+            <button
+              className={cn(styles.button, styles.sidebarMobileButton)}
+              onClick={() => {
+                disconnectWallet();
+                setMobileMenu(false);
+              }}
+            >
+              Disconnect Wallet
+            </button>
+          ) : (
+            <button
+              className={cn(styles.button, styles.sidebarMobileButton)}
+              onClick={() => {
+                connectPhantomWallet();
+                setMobileMenu(false);
+              }}
+              disabled={connecting}
+            >
+              {connecting ? "Connecting..." : "Connect Wallet"}
+            </button>
+          )}
         </div>
       </div>
 
       <div className={styles.contentArea}>
         <div className={styles.contentAreaWrapper}>
           <div className={styles.contentAreaTop}>
-            <button
-              className={cn(styles.button, styles.contentAreaMenu)}
-              onClick={() => setMobileMenu(true)}
-            >
-              <Menu />
-            </button>
-
             {connected ? (
               <button
                 className={cn(styles.button, styles.connectButton)}
                 onClick={disconnectWallet}
               >
-                Disonnect Wallet
+                Disconnect Wallet
               </button>
             ) : (
               <button
@@ -339,6 +355,30 @@ export default function HomePage() {
             </div>
           )}
         </div>
+      </div>
+
+      <div className={styles.mobileMenu}>
+        <Link href="/" className={styles.mobileMenuLogo}>
+          <Image src="/img/logo.png" alt="logo" fill />
+        </Link>
+
+        <Link href="/" className={styles.mobileMenuLink}>
+          <Home />
+          Dashboard
+        </Link>
+
+        <Link href="/" className={styles.mobileMenuLink}>
+          <Star />
+          Reputation
+        </Link>
+
+        <button
+          className={cn(styles.button, styles.mobileMenuButton)}
+          onClick={() => setMobileMenu(true)}
+        >
+          <Dots />
+          More
+        </button>
       </div>
     </div>
   );
