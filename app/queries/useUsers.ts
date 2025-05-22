@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getUser } from './getUsers';
+import { getUser } from '../api/getUsers';
 import { useWallet } from '@solana/wallet-adapter-react';
 
 export const useUsers = () => {
