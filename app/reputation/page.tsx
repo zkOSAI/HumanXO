@@ -7,6 +7,7 @@ import cn from "classnames";
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import {join} from "../api/join"
 
 import styles from "../page.module.css";
 //import { useUsers } from "../queries/useUsers";
@@ -34,8 +35,8 @@ export default function HomePage() {
   const pathname = usePathname();
   //const data = useUsers();
   const quizs = useQuizs();
-  //const { publicKey } = useWallet();  
-  console.log("quizs", quizs);
+  const { publicKey } = useWallet();  
+  //console.log("quizs", quizs);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
   };
@@ -192,7 +193,7 @@ export default function HomePage() {
                 </button>
               </div>
               
-              {/* {quizs?.map((quiz: any) => (
+               {quizs?.map((quiz: any) => (
                 <div key={quiz._id} className={styles.dashboardInfoClaim}>
                   <div className={styles.dashboardInfoBlockTitle}>
                     level: {quiz.level}
@@ -224,13 +225,13 @@ export default function HomePage() {
                       styles.dashboardInfoBlockButton
                     )}
                     onClick={() => {
-                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty);
+                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty, quiz.maxUser,quiz.currentUser, quiz.startTime, quiz.period);
                     }}
                   >
                     Join
                   </button>
                 </div>
-              ))} */}
+              ))} 
             </div>
           ) : (
             <div className={styles.welcome}>

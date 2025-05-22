@@ -8,7 +8,7 @@ export const checkDeposit = async (sig: string, quizId: string, publicKey: Publi
         publicKey,
         };
         const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/checkDeposit`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/quiz/checkDeposit`,
         data,
         {
             headers: {

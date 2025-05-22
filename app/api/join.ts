@@ -21,8 +21,21 @@ export const join = async (
   id: string,
   publicKey: PublicKey | null,
   minimum: number,
-  warranty: number
+  warranty: number,
+  maxUser: number,
+  currentUser: number,
+  startTime: number,
+  period: number,
 ) => {
+  console.log(id)
+  console.log(new Date("2025-06-01T12:00:00.000Z"));
+
+  console.log(new Date(new Date("2025-06-01T12:00:00.000Z").getTime() + period));
+  if (maxUser == currentUser) {
+    toast.error("max user exceed");
+    return;
+  }
+
   try {
     const provider = window.solana;
     if (!provider || !provider.isPhantom) {
@@ -54,12 +67,14 @@ export const join = async (
       // Request Phantom to sign and send
       const signedTx = await provider.signTransaction(tx);
       const sig = await connection.sendRawTransaction(signedTx.serialize());
+      console.log(sig);
 
+
+      await connection.confirmTransaction(sig, "confirmed");
       console.log("✅ Transaction sent:", sig);
       const res = await checkDeposit(sig, id, publicKey);
       console.log(res);
-      toast.info(res.data);
-      await connection.confirmTransaction(sig, "confirmed");
+      //toast.info(res.data);
       toast.dismiss(toastId);
       toast.success(`Transaction successful!`);
     } else toast.error(`not enough balance`);
