@@ -1,10 +1,10 @@
 //import axios from "axios";
- import { PublicKey } from "@solana/web3.js"; 
+
  
 import { toast } from 'react-toastify';
-
-export const claim = async (publicKey: PublicKey | null) => {
-    console.log(publicKey);
+type EthAddress = `0x${string}`;
+export const claim = async (address:EthAddress | undefined ) => {
+    console.log(address);
     toast.error("Unable to claim");
     // try {
     //   const data = {

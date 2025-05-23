@@ -7,7 +7,7 @@ import cn from "classnames";
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import {join} from "../api/join"
+import { join } from "../api/join"
 
 import styles from "../page.module.css";
 //import { useUsers } from "../queries/useUsers";
@@ -35,7 +35,7 @@ export default function HomePage() {
   const pathname = usePathname();
   //const data = useUsers();
   const quizs = useQuizs();
-  const { publicKey } = useWallet();  
+  const { publicKey } = useWallet();
   //console.log("quizs", quizs);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
@@ -51,103 +51,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className={styles.content}>
-      <div
-        className={cn(styles.sidebar, {
-          [styles.active]: mobileMenu,
-        })}
-      >
-        <div className={styles.sidebarTop}>
-          <div className={styles.sidebarLogoInner}>
-            <Link
-              href="/"
-              className={styles.sidebarLogo}
-              onClick={() => setMobileMenu(false)}
-            >
-              <div className="imageDiv">
-                <Image
-                  className="imageDiv1"
-                  src="/img/logo.png"
-                  alt="logo"
-                  fill
-                />
-              </div>
-            </Link>
-
-            <button
-              className={cn(styles.button, styles.sidebarClose)}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Cross />
-            </button>
-          </div>
-
-          <nav className={styles.sidebarNav}>
-            <Link
-              href="/"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Home />
-              Dashboard
-            </Link>
-
-            <Link
-              href="/reputation"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/reputation" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Star />
-              Reputation (SOON)
-            </Link>
-
-            <Link
-              href="/statistics"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/statistics" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Stats />
-              Statistics (SOON)
-            </Link>
-          </nav>
-        </div>
-
-        <div className={styles.sidebarBottom}>
-          <div className={styles.sidebarBottomTheme}>
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "dark",
-              })}
-              onClick={() => setTheme("dark")}
-            >
-              <Moon />
-            </button>
-
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "light",
-              })}
-              onClick={() => setTheme("light")}
-            >
-              <Sun />
-            </button>
-          </div>
-
-          <button className={cn(styles.button, styles.sidebarBottomMore)}>
-            <Dots />
-          </button>
-        </div>
-      </div>
-
+    <>
       <div className={styles.contentArea}>
         <div className={styles.contentAreaWrapper}>
           <div className={styles.contentAreaTop}>
@@ -192,8 +96,8 @@ export default function HomePage() {
                   Coming Soon
                 </button>
               </div>
-              
-               {quizs?.map((quiz: any) => (
+
+              {quizs?.map((quiz: any) => (
                 <div key={quiz._id} className={styles.dashboardInfoClaim}>
                   <div className={styles.dashboardInfoBlockTitle}>
                     level: {quiz.level}
@@ -213,10 +117,10 @@ export default function HomePage() {
                     reward: {quiz.warranty * 2}
                   </p>
                   <p className={styles.dashboardInfoBlockText}>
-                    Winners: {quiz.winners }
+                    Winners: {quiz.winners}
                   </p>
                   <p className={styles.dashboardInfoBlockText}>
-                    Losers: {quiz.looser }
+                    Losers: {quiz.looser}
                   </p>
 
                   <button
@@ -225,13 +129,13 @@ export default function HomePage() {
                       styles.dashboardInfoBlockButton
                     )}
                     onClick={() => {
-                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty, quiz.maxUser,quiz.currentUser, quiz.startTime, quiz.period);
+                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty, quiz.maxUser, quiz.currentUser, quiz.startTime, quiz.period);
                     }}
                   >
                     Join
                   </button>
                 </div>
-              ))} 
+              ))}
             </div>
           ) : (
             <div className={styles.welcome}>
@@ -308,7 +212,9 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </div></>
+
+
+
   );
 }

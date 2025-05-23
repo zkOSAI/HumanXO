@@ -7,9 +7,10 @@ import cn from "classnames";
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { join } from "../api/join"
 
 import styles from "../page.module.css";
-import { useUsers } from "../queries/useUsers";
+//import { useUsers } from "../queries/useUsers";
 
 import {
   Cross,
@@ -22,20 +23,23 @@ import {
   Stats,
   Sun,
 } from "@/shared/icons";
+import { useQuizs } from "../queries/useQuizs";
+//import { join } from "../api/join";
 
 export default function HomePage() {
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const [mobileMenu, setMobileMenu] = React.useState(false);
-  const {  disconnect, connected, connecting } = useWallet();
+  const { disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
   const pathname = usePathname();
-  const data = useUsers();
-  console.log(data);
+  //const data = useUsers();
+  const quizs = useQuizs();
+  const { publicKey } = useWallet();
+  //console.log("quizs", quizs);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
   };
-
 
   const connectPhantomWallet = async () => {
     console.log("connection wallet");
@@ -47,103 +51,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className={styles.content}>
-      <div
-        className={cn(styles.sidebar, {
-          [styles.active]: mobileMenu,
-        })}
-      >
-        <div className={styles.sidebarTop}>
-          <div className={styles.sidebarLogoInner}>
-            <Link
-              href="/"
-              className={styles.sidebarLogo}
-              onClick={() => setMobileMenu(false)}
-            >
-              <div className="imageDiv">
-                <Image
-                  className="imageDiv1"
-                  src="/img/logo.png"
-                  alt="logo"
-                  fill
-                />
-              </div>
-            </Link>
-
-            <button
-              className={cn(styles.button, styles.sidebarClose)}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Cross />
-            </button>
-          </div>
-
-          <nav className={styles.sidebarNav}>
-            <Link
-              href="/"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Home />
-              Dashboard
-            </Link>
-
-            <Link
-              href="/reputation"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/reputation" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Star />
-              Reputation (SOON)
-            </Link>
-
-            <Link
-              href="/statistics"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/statistics" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Stats />
-              Statistics (SOON)
-            </Link>
-          </nav>
-        </div>
-
-        <div className={styles.sidebarBottom}>
-          <div className={styles.sidebarBottomTheme}>
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "dark",
-              })}
-              onClick={() => setTheme("dark")}
-            >
-              <Moon />
-            </button>
-
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "light",
-              })}
-              onClick={() => setTheme("light")}
-            >
-              <Sun />
-            </button>
-          </div>
-
-          <button className={cn(styles.button, styles.sidebarBottomMore)}>
-            <Dots />
-          </button>
-        </div>
-      </div>
-
+    <>
       <div className={styles.contentArea}>
         <div className={styles.contentAreaWrapper}>
           <div className={styles.contentAreaTop}>
@@ -178,23 +86,56 @@ export default function HomePage() {
                 <div className={styles.dashboardInfoCircle}></div>
 
                 <p className={styles.dashboardInfoBread}>
-                  <Stats />
-                  Statistic
+                  <Star />
+                  Reputation
                 </p>
-
-               
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
-                  
                 >
-                 Coming Soon
+                  Coming Soon
                 </button>
-
-               
               </div>
 
-              
+              {quizs?.map((quiz: any) => (
+                <div key={quiz._id} className={styles.dashboardInfoClaim}>
+                  <div className={styles.dashboardInfoBlockTitle}>
+                    level: {quiz.level}
+                  </div>
+
+                  <p className={styles.dashboardInfoBlockText}>
+                    current users: {quiz.currentUser}
+                  </p>
+
+                  <p className={styles.dashboardInfoBlockText}>
+                    Minimum Hold amount: {quiz.minimumHolding}
+                  </p>
+                  <p className={styles.dashboardInfoBlockText}>
+                    warrant: {quiz.warranty}
+                  </p>
+                  <p className={styles.dashboardInfoBlockText}>
+                    reward: {quiz.warranty * 2}
+                  </p>
+                  <p className={styles.dashboardInfoBlockText}>
+                    Winners: {quiz.winners}
+                  </p>
+                  <p className={styles.dashboardInfoBlockText}>
+                    Losers: {quiz.looser}
+                  </p>
+
+                  <button
+                    className={cn(
+                      styles.button,
+                      styles.dashboardInfoBlockButton
+                    )}
+                    onClick={() => {
+                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty, quiz.maxUser, quiz.currentUser, quiz.startTime, quiz.period);
+                    }}
+                  >
+                    Join
+                  </button>
+                </div>
+              ))}
             </div>
           ) : (
             <div className={styles.welcome}>
@@ -271,7 +212,9 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </div></>
+
+
+
   );
 }

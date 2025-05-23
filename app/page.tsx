@@ -5,8 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import cn from "classnames";
 
-import { usePathname } from "next/navigation";
-import { useWallet } from "@solana/wallet-adapter-react";
+
 
 import { claim } from "./api/claim";
 
@@ -15,7 +14,6 @@ import { useUsers } from "./queries/useUsers";
 
 import { RedWalletOptions } from './component/RedWalletOptions';
 import { WhiteWalletOptions } from './component/WhiteWalletOptions';
-import { MobileWalletOptions } from "./component/MobileWalletOptions";
 
 import {
   Cross,
@@ -32,6 +30,7 @@ import ImportPrivateKey from "./component/importButton";
 import { useMobileMenu } from "./context/mobileContext";
 import { useTheme } from "./context/themeContext";
 import Sidebar from "./component/Sidebar";
+import { useAccount } from "wagmi";
 //import ConnectWallet from "./component/redWallet";
 
 
@@ -39,10 +38,8 @@ export default function HomePage() {
   const { theme, setTheme } = useTheme();
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
   const { mobileMenu, setMobileMenu } = useMobileMenu();
-  const { publicKey, disconnect, connected, connecting } = useWallet();
+const {isConnected, address} = useAccount();
 
-
-  const pathname = usePathname();
   const data = useUsers();
   const navigateToExtensionPage = () => {
     window.open(`https://github.com/zkOSAI/HumanXO-Extension`, "_blank");
@@ -51,105 +48,7 @@ export default function HomePage() {
 
 
   return (
-    <div className={styles.content}>
-      <div
-        className={cn(styles.sidebar, {
-          [styles.active]: mobileMenu,
-        })}
-      >
-        <div className={styles.sidebarTop}>
-          <div className={styles.sidebarLogoInner}>
-            <Link
-              href="/"
-              className={styles.sidebarLogo}
-              onClick={() => setMobileMenu(false)}
-            >
-              <div className="imageDiv">
-                <Image
-                  className="imageDiv1"
-                  src="/img/logo.png"
-                  alt="logo"
-                  fill
-                />
-              </div>
-            </Link>
-
-            <button
-              className={cn(styles.button, styles.sidebarClose)}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Cross />
-            </button>
-          </div>
-
-          <nav className={styles.sidebarNav}>
-            <Link
-              href="/"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Home />
-              Dashboard
-            </Link>
-
-            <Link
-              href="/reputation"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/reputation" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Star />
-              Reputation (SOON)
-            </Link>
-
-            <Link
-              href="/statistics"
-              className={cn(
-                styles.sidebarNavLink,
-                pathname === "/statistics" && styles.active
-              )}
-              onClick={() => setMobileMenu(false)}
-            >
-              <Stats />
-              Statistics (SOON)
-            </Link>
-          </nav>
-        </div>
-
-        <div className={styles.sidebarBottom}>
-          <div className={styles.sidebarBottomTheme}>
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "dark",
-              })}
-              onClick={() => setTheme("dark")}
-            >
-              <Moon />
-            </button>
-
-            <button
-              className={cn(styles.button, styles.sidebarThemeItem, {
-                [styles.active]: theme === "light",
-              })}
-              onClick={() => setTheme("light")}
-            >
-              <Sun />
-            </button>
-          </div>
-
-          <button className={cn(styles.button, styles.sidebarBottomMore)}>
-            <Dots />
-          </button>
-
-          <MobileWalletOptions />
-        </div>
-      </div>
-      <Sidebar />
+    <>
       <div className={styles.contentArea}>
         <div className={styles.contentAreaWrapper}>
           <div className={styles.contentAreaTop}>
@@ -157,7 +56,7 @@ export default function HomePage() {
             <RedWalletOptions />
           </div>
 
-          {connected ? (
+          {isConnected ? (
             <div className={styles.dashboard}>
               <div className={styles.dashboardInfo}>
                 <div className={styles.dashboardInfoCircle}></div>
@@ -173,7 +72,7 @@ export default function HomePage() {
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
-                  onClick={() => claim(publicKey)}
+                  onClick={() => claim(address)}
                 >
                   Claim Rewards
                 </button>
@@ -310,6 +209,6 @@ export default function HomePage() {
           More
         </button>
       </div>
-    </div>
+    </>
   );
 }
