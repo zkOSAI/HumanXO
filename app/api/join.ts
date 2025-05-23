@@ -72,11 +72,15 @@ export const join = async (
 
       await connection.confirmTransaction(sig, "confirmed");
       console.log("✅ Transaction sent:", sig);
-      const res = await checkDeposit(sig, id, publicKey);
-      console.log(res);
-      //toast.info(res.data);
       toast.dismiss(toastId);
       toast.success(`Transaction successful!`);
+      const toastId2 = toast.loading("waiting reply from server");
+      const res = await checkDeposit(sig, id, publicKey);
+      toast.dismiss(toastId2);
+      toast.success("Joined successfully");
+      //toast.info(res.data);
+      
+      return res;
     } else toast.error(`not enough balance`);
   } catch (e) {
     toast.dismiss(toastId);

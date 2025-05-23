@@ -4,13 +4,18 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import cn from "classnames";
+
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+
 import { claim } from "./api/claim";
 
 import styles from "./page.module.css";
 import { useUsers } from "./queries/useUsers";
+
+import { RedWalletOptions } from './component/RedWalletOptions';
+import { WhiteWalletOptions } from './component/WhiteWalletOptions';
+import { MobileWalletOptions } from "./component/MobileWalletOptions";
 
 import {
   Cross,
@@ -24,44 +29,26 @@ import {
   Sun,
 } from "@/shared/icons";
 import ImportPrivateKey from "./component/importButton";
+import { useMobileMenu } from "./context/mobileContext";
+import { useTheme } from "./context/themeContext";
+import Sidebar from "./component/Sidebar";
+//import ConnectWallet from "./component/redWallet";
+
 
 export default function HomePage() {
-  const [theme, setTheme] = React.useState<"light" | "dark">("light");
+  const { theme, setTheme } = useTheme();
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
-  const [mobileMenu, setMobileMenu] = React.useState(false);
+  const { mobileMenu, setMobileMenu } = useMobileMenu();
   const { publicKey, disconnect, connected, connecting } = useWallet();
-  const { setVisible } = useWalletModal();
+
+
   const pathname = usePathname();
   const data = useUsers();
-  console.log(data);
   const navigateToExtensionPage = () => {
     window.open(`https://github.com/zkOSAI/HumanXO-Extension`, "_blank");
   };
-  React.useEffect(() => {
-    const checkConnection = async () => {
-      try {
-        // @ts-expect-error: third-party type issue
-        const provider = window.phantom?.solana;
-        if (provider?.isPhantom) {
-          //const connected = provider.isConnected;
-          //setConnected(connected);
-        }
-      } catch (error) {
-        console.error("Error checking connection:", error);
-      }
-    };
 
-    checkConnection();
-  }, []);
 
-  const connectPhantomWallet = async () => {
-    console.log("connection wallet");
-    setVisible(true);
-  };
-
-  const disconnectWallet = async () => {
-    disconnect();
-  };
 
   return (
     <div className={styles.content}>
@@ -159,51 +146,15 @@ export default function HomePage() {
             <Dots />
           </button>
 
-        
-          {connected ? (
-            <button
-              className={cn(styles.button, styles.sidebarMobileButton)}
-              onClick={() => {
-                disconnectWallet();
-                setMobileMenu(false);
-              }}
-            >
-              Disconnect Wallet
-            </button>
-          ) : (
-            <button
-              className={cn(styles.button, styles.sidebarMobileButton)}
-              onClick={() => {
-                connectPhantomWallet();
-                setMobileMenu(false);
-              }}
-              disabled={connecting}
-            >
-              {connecting ? "Connecting..." : "Connect Wallet"}
-            </button>
-          )}
+          <MobileWalletOptions />
         </div>
       </div>
-
+      <Sidebar />
       <div className={styles.contentArea}>
         <div className={styles.contentAreaWrapper}>
           <div className={styles.contentAreaTop}>
-            {connected ? (
-              <button
-                className={cn(styles.button, styles.connectButton)}
-                onClick={disconnectWallet}
-              >
-                Disconnect Wallet
-              </button>
-            ) : (
-              <button
-                className={cn(styles.button, styles.connectButton)}
-                onClick={connectPhantomWallet}
-                disabled={connecting}
-              >
-                {connecting ? "Connecting..." : "Connect Wallet"}
-              </button>
-            )}
+
+            <RedWalletOptions />
           </div>
 
           {connected ? (
@@ -271,11 +222,6 @@ export default function HomePage() {
                     private key.
                   </p>
 
-                  {/* <button
-                    className={cn(styles.button, styles.dashboardSyncButton)}
-                  >
-                    Import Private Key
-                  </button> */}
                   <ImportPrivateKey />
                 </div>
               </div>
@@ -301,23 +247,7 @@ export default function HomePage() {
                     identity, unlock rewards and contribute to a more
                     Sybil-resistant blockchain.
                   </p>
-
-                  {connected ? (
-                    <button
-                      className={cn(styles.button, styles.welcomeBlockConnect)}
-                      onClick={disconnectWallet}
-                    >
-                      Disonnect Wallet
-                    </button>
-                  ) : (
-                    <button
-                      className={cn(styles.button, styles.welcomeBlockConnect)}
-                      onClick={connectPhantomWallet}
-                      disabled={connecting}
-                    >
-                      {connecting ? "Connecting..." : "Connect Wallet"}
-                    </button>
-                  )}
+                  <WhiteWalletOptions />
                 </div>
               </div>
 
