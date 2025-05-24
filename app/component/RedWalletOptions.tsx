@@ -10,7 +10,7 @@ import cn from "classnames";
 export function RedWalletOptions() {
     const { connectors, connect, status } = useConnect();
     const { disconnect } = useDisconnect();
-    const { isConnected, address } = useAccount();
+    const { isConnected } = useAccount();
 
     if (isConnected) {
         return (

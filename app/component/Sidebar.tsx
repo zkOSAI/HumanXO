@@ -7,9 +7,9 @@ import styles from "../page.module.css"
 import {
     Cross,
     Dots,
-    Face,
+    
     Home,
-    Home2,
+    
     Moon,
     Star,
     Stats,

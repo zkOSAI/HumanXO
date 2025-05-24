@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 type EthAddress = `0x${string}`;
 export const claim = async (publicKey:EthAddress | undefined ) => {
+  const toastId = toast.loading("Waiting");
     try {
       const data = {
         publicKey,
@@ -21,7 +22,8 @@ export const claim = async (publicKey:EthAddress | undefined ) => {
           },
         }
       );
-      alert(response.data.message);
+      toast.dismiss(toastId);
+      toast.success(response.data.message);
     } catch (err) {
         
       console.error("Error:", err);

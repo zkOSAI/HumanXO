@@ -1,41 +1,29 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import cn from "classnames";
-import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { join } from "../api/join"
 
 import styles from "../page.module.css";
 //import { useUsers } from "../queries/useUsers";
 
 import {
-  Cross,
-  Dots,
+
   Face,
-  Home,
   Menu,
-  Moon,
   Star,
-  Stats,
-  Sun,
 } from "@/shared/icons";
-import { useQuizs } from "../queries/useQuizs";
+import { useMobileMenu } from "../context/mobileContext";
 //import { join } from "../api/join";
 
 export default function HomePage() {
-  const [theme, setTheme] = React.useState<"light" | "dark">("light");
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
-  const [mobileMenu, setMobileMenu] = React.useState(false);
+  const { setMobileMenu } = useMobileMenu();
   const { disconnect, connected, connecting } = useWallet();
   const { setVisible } = useWalletModal();
-  const pathname = usePathname();
   //const data = useUsers();
-  const quizs = useQuizs();
-  const { publicKey } = useWallet();
   //console.log("quizs", quizs);
   const navigateToExtensionPage = () => {
     window.open(`https://chrome.google.com/webstore`, "_blank");
@@ -97,45 +85,7 @@ export default function HomePage() {
                 </button>
               </div>
 
-              {quizs?.map((quiz: any) => (
-                <div key={quiz._id} className={styles.dashboardInfoClaim}>
-                  <div className={styles.dashboardInfoBlockTitle}>
-                    level: {quiz.level}
-                  </div>
 
-                  <p className={styles.dashboardInfoBlockText}>
-                    current users: {quiz.currentUser}
-                  </p>
-
-                  <p className={styles.dashboardInfoBlockText}>
-                    Minimum Hold amount: {quiz.minimumHolding}
-                  </p>
-                  <p className={styles.dashboardInfoBlockText}>
-                    warrant: {quiz.warranty}
-                  </p>
-                  <p className={styles.dashboardInfoBlockText}>
-                    reward: {quiz.warranty * 2}
-                  </p>
-                  <p className={styles.dashboardInfoBlockText}>
-                    Winners: {quiz.winners}
-                  </p>
-                  <p className={styles.dashboardInfoBlockText}>
-                    Losers: {quiz.looser}
-                  </p>
-
-                  <button
-                    className={cn(
-                      styles.button,
-                      styles.dashboardInfoBlockButton
-                    )}
-                    onClick={() => {
-                      join(quiz._id, publicKey, quiz.minimumHolding, quiz.warranty, quiz.maxUser, quiz.currentUser, quiz.startTime, quiz.period);
-                    }}
-                  >
-                    Join
-                  </button>
-                </div>
-              ))}
             </div>
           ) : (
             <div className={styles.welcome}>

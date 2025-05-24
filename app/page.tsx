@@ -16,29 +16,26 @@ import { RedWalletOptions } from './component/RedWalletOptions';
 import { WhiteWalletOptions } from './component/WhiteWalletOptions';
 
 import {
-  Cross,
+
   Dots,
   Face,
   Home,
   Home2,
-  Moon,
+
   Star,
-  Stats,
-  Sun,
+
+
 } from "@/shared/icons";
 import ImportPrivateKey from "./component/importButton";
 import { useMobileMenu } from "./context/mobileContext";
-import { useTheme } from "./context/themeContext";
-import Sidebar from "./component/Sidebar";
 import { useAccount } from "wagmi";
 //import ConnectWallet from "./component/redWallet";
 
 
 export default function HomePage() {
-  const { theme, setTheme } = useTheme();
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
-  const { mobileMenu, setMobileMenu } = useMobileMenu();
-const {isConnected, address} = useAccount();
+  const {  setMobileMenu } = useMobileMenu();
+  const { isConnected, address } = useAccount();
 
   const data = useUsers();
   const navigateToExtensionPage = () => {

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { useWallet } from "@solana/wallet-adapter-react";
 import axios from "axios";
 import { config } from "dotenv";
 import { validateKeyChecksum } from "../utils/validate";
