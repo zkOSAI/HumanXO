@@ -2,15 +2,14 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '../api/getUsers';
-import { useWallet } from '@solana/wallet-adapter-react';
-
+import { useAccount } from 'wagmi';
 export const useUsers = () => {
-    const { publicKey } = useWallet();
+    const { address } = useAccount();
     const { data} = useQuery({
-        queryKey: ['users', publicKey],
-        queryFn: () => getUser(publicKey),
+        queryKey: ['users', address],
+        queryFn: () => getUser(address),
         refetchInterval: 4 * 1000,  // optional: poll every 10s
-        enabled: !!publicKey
+        enabled: !!address
     });
     if (data) { 
         console.log("get user data ")

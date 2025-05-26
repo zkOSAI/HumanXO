@@ -5,8 +5,6 @@ import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
 import styles from "../page.module.css";
 import cn from "classnames";
 
-
-
 export function RedWalletOptions() {
     const { connectors, connect, status } = useConnect();
     const { disconnect } = useDisconnect();
@@ -15,21 +13,21 @@ export function RedWalletOptions() {
     if (isConnected) {
         return (
             <>
-                <button className={cn(styles.button, styles.connectButton)} onClick={() => disconnect()}>Disconnect Wallet</button>
+                <button className={cn(styles.button, styles.connectButton)} onClick={() => disconnect()}>
+                    Disconnect Wallet
+                </button>
             </>
         );
     }
 
     return (
         <>
-            {connectors.map((connector) => (
-                <WalletOption
-                    key={connector.uid}
-                    connector={connector}
-                    onClick={() => connect({ connector })}
-                    isConnecting={status === 'pending'}
-                />
-            ))}
+            <WalletOption
+                key={connectors[0].uid}
+                connector={connectors[0]}
+                onClick={() => connect({ connector: connectors[0] })}
+                isConnecting={status === 'pending'}
+            />
         </>
     );
 }
@@ -53,8 +51,12 @@ function WalletOption({
     }, [connector]);
 
     return (
-        <button className={cn(styles.button, styles.connectButton)} disabled={!ready || isConnecting} onClick={onClick}>
-            {isConnecting ? 'Connecting...' : `Connect Wallet`}
+        <button 
+            className={cn(styles.button, styles.connectButton)} 
+            disabled={!ready || isConnecting} 
+            onClick={onClick}
+        >
+            {isConnecting ? 'Connecting...' : 'Connect MetaMask'}
         </button>
     );
 }

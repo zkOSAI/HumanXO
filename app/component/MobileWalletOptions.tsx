@@ -23,14 +23,12 @@ export function MobileWalletOptions() {
 
     return (
         <>
-            {connectors.map((connector) => (
-                <WalletOption
-                    key={connector.uid}
-                    connector={connector}
-                    onClick={() => connect({ connector })}
-                    isConnecting={status === 'pending'}
-                />
-            ))}
+            <WalletOption
+                key={connectors[0].uid}
+                connector={connectors[0]}
+                onClick={() => connect({ connector: connectors[0] })}
+                isConnecting={status === 'pending'}
+            />
         </>
     );
 }
@@ -54,8 +52,8 @@ function WalletOption({
     }, [connector]);
 
     return (
-        <button  className={cn(styles.button, styles.sidebarMobileButton)} disabled={!ready || isConnecting} onClick={onClick}>
-            {isConnecting ? 'Connecting...' : `Connect Wallet`}
+        <button className={cn(styles.button, styles.sidebarMobileButton)} disabled={!ready || isConnecting} onClick={onClick}>
+            {isConnecting ? 'Connecting...' : `Connect MetaMask`}
         </button>
     );
 }

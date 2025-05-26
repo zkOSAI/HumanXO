@@ -68,6 +68,17 @@ export default function Sidebar() {
                         <Home />
                         Dashboard
                     </Link>
+                    {/* <Link
+                        href="/airdrop"
+                        className={cn(
+                            styles.sidebarNavLink,
+                            pathname === "/airdrop" && styles.active
+                        )}
+                        onClick={() => setMobileMenu(false)}
+                    >
+                        <Stats />
+                        airdrop 
+                    </Link> */}
 
                     <Link
                         href="/reputation"
@@ -92,6 +103,7 @@ export default function Sidebar() {
                         <Stats />
                         Statistics (SOON)
                     </Link>
+                    
                 </nav>
             </div>
 
