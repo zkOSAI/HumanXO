@@ -150,11 +150,11 @@ export default function HomePage() {
               <div className={styles.welcomeWrapper}>
                 <div className={styles.welcomeSolana}>
                   <div className={styles.welcomeSolanaImg}>
-                    <Image src="/img/solana.png" alt="Solana" fill />
+                    <Image src="/img/ether.svg" alt="Ethereum" fill />
                   </div>
 
                   <div className={styles.welcomeSolanaText}>
-                    <p>Built on Solana,</p>
+                    <p>Built on Ethereum,</p>
 
                     <p>designed to increase</p>
 

@@ -278,7 +278,7 @@
     width: 100%;
     padding: 3.2rem;
     border-radius: 10px;
-    background: linear-gradient(to right, #9945ff, #717adf, #46b2be);
+    background: linear-gradient(to right, #717adf,#abd7f0 );
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -288,8 +288,8 @@
 .welcomeSolanaImg{
     position: relative;
     width: 100%;
-    max-width: 59px;
-    height: 46px;
+    max-width: 69px;
+    height: 56px;
 }
 
 .welcomeSolanaImg img{
