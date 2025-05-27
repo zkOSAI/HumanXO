@@ -81,7 +81,7 @@ export default function Sidebar() {
                     </Link> */}
 
                     <Link
-                        href="/reputation"
+                        href="/"
                         className={cn(
                             styles.sidebarNavLink,
                             pathname === "/reputation" && styles.active
@@ -93,7 +93,7 @@ export default function Sidebar() {
                     </Link>
 
                     <Link
-                        href="/statistics"
+                        href="/"
                         className={cn(
                             styles.sidebarNavLink,
                             pathname === "/statistics" && styles.active

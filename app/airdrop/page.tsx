@@ -20,7 +20,6 @@ import {
     Dots,
     Face,
     Home,
-    Home2,
 
     Star,
 
@@ -28,7 +27,6 @@ import {
 } from "@/shared/icons";
 import { useMobileMenu } from "../context/mobileContext";
 import { useAccount } from "wagmi";
-import { verifySolana } from "../api/verifySolana";
 //import ConnectWallet from "./component/redWallet";
 
 

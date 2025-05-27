@@ -1,9 +1,7 @@
 //import axios from "axios";
 import { PublicKey } from "@solana/web3.js";
-import {  useSignMessage } from "wagmi";
 
 export const verifySolana = async (publicKey: PublicKey | null) => {
-  const { data: signature, signMessage, isPending: isSigningPending, error: signingError } = useSignMessage();
   try {
     if (!publicKey) {
       throw new Error("publickey is required");
