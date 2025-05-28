@@ -7,7 +7,7 @@ import cn from "classnames";
 
 
 
-import { claim } from "./api/claim";
+//import { claim } from "./api/claim";
 
 import styles from "./page.module.css";
 import { useUsers } from "./queries/useUsers";
@@ -28,9 +28,23 @@ import {
 } from "@/shared/icons";
 import ImportPrivateKey from "./component/importButton";
 import { useMobileMenu } from "./context/mobileContext";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
+import { claimWithContract } from "./api/claimWithContract";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
 //import ConnectWallet from "./component/redWallet";
 
+
+// Custom hook to convert wagmi wallet client to ethers signer
+function useEthersSigner() {
+    const { data: walletClient } = useWalletClient();
+
+    return React.useMemo(() => {
+        if (!walletClient) return null;
+
+        const provider = new BrowserProvider(walletClient.transport);
+        return provider.getSigner();
+    }, [walletClient]);
+}
 
 export default function HomePage() {
   // const [connectedWallet, setConnectedWallet] = React.useState(false);
@@ -41,7 +55,15 @@ export default function HomePage() {
   const navigateToExtensionPage = () => {
     window.open(`https://github.com/zkOSAI/HumanXO-Extension`, "_blank");
   };
-
+  const signer = useEthersSigner();
+const [ethersSigner, setEthersSigner] = React.useState<JsonRpcSigner | null>(null);
+ React.useEffect(() => {
+        if (signer) {
+            signer.then(setEthersSigner).catch(console.error);
+        } else {
+            setEthersSigner(null);
+        }
+    }, [signer]);
 
 
   return (
@@ -69,7 +91,7 @@ export default function HomePage() {
 
                 <button
                   className={cn(styles.button, styles.dashboardInfoClaim)}
-                  onClick={() => claim(address)}
+                  onClick={() => claimWithContract(address,process.env.NEXT_PUBLIC_CLAIM_CONTRACT!,ethersSigner!)}
                 >
                   Claim Rewards
                 </button>
