@@ -81,7 +81,7 @@ export default function Sidebar() {
                     </Link> */}
 
                     <Link
-                        href="/"
+                        href="/reputation"
                         className={cn(
                             styles.sidebarNavLink,
                             pathname === "/reputation" && styles.active
@@ -89,7 +89,7 @@ export default function Sidebar() {
                         onClick={() => setMobileMenu(false)}
                     >
                         <Star />
-                        Reputation (SOON)
+                        Reputation
                     </Link>
 
                     <Link

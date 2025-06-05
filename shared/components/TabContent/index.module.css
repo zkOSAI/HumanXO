@@ -1,0 +1,34 @@
+.reputationSubTabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+@media (max-width:576px) {
+    .reputationSubTabs {
+        justify-content: flex-start;
+    }
+}
+
+.reputationSubTab {
+    color: #707070;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    padding: 0.6rem 1.2rem;
+    white-space: nowrap;
+}
+
+.reputationSubTabActive {
+    color: #FF4D00;
+    border-bottom: 1px solid #FF4D00;
+}
+
+.reputationCards {
+    width: 100%;
+    max-width: 812px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}

@@ -717,3 +717,216 @@
 @media(max-width: 480px){
 	
 }
+
+/* xw1nchester */
+.reputationBlock {
+    position: relative;
+    width: calc(50% - 10px);
+    padding: 16px 20px;
+    min-height: 228px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.reputationBlock img{
+    object-fit: cover;
+}
+
+@media (max-width:1100px) {
+    .reputationBlock {
+        width: 100%;
+    }
+}
+
+.reputationBlockRewards {
+    color: #FFF;
+}
+
+.reputationBlockContent {
+    position: relative;
+}
+
+.reputationBlockTitle {
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.reputationBlockText {
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.reputationBold {
+    font-weight: 500;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.reputationTabsWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 12px;
+}
+
+@media (max-width:998px) {
+    .reputationTabsWrapper {
+        flex-direction: column;
+    }
+}
+
+.reputationTabs {
+    display: flex;
+    background-color: #FF4D00;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.reputationTab {
+    padding: 7px;
+    min-width: 134px;
+    justify-content: center;
+    border-radius: 8px;
+    color: #FFF;
+    background-color: #FF4D00;
+
+    border: none;
+}
+
+.reputationTabActive {
+    background-color: #FFF;
+    color: #000;
+    font-weight: 500;
+}
+
+.reputationLeaderboard {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #FFE2D6;
+    border-radius: 6px;
+    padding: 7px 18px;
+    gap: 10px;
+}
+
+@media (max-width:998px) {
+    .reputationLeaderboard {
+        position: static;
+        transform: unset;
+    }
+}
+
+.quizPopup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    border-radius: 26px;
+}
+
+.quizPopupHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.quizPopupSteps {
+    font-size: 22px;
+    font-weight: 300;
+    color: #707070;
+    display: flex;
+    align-items: center;
+}
+
+.quizPopupStepsHighlited {
+    color: #FF4D00;
+}
+
+.quizPopupStepsMax {
+    font-size: 16px;
+}
+
+.quizPopupBar {
+    width: 100%;
+    height: 7px;
+    background-color: #D9D9D9;
+    display: flex;
+    border-radius: 3.5px;
+}
+
+.quizPopupBarValue {
+    background-color: #100F11;
+    border-radius: 3.5px;
+}
+
+.quizPopupContent {
+    width: 100%;
+    max-width: 556px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 43px 28px;
+}
+
+.quizPopupTitle {
+    font-size: 28px;
+    font-weight: 600;
+    color: #100F11;
+}
+
+.quizPopupChoices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.quizPopupChoice {
+    width: calc(50% - 6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background-color: #FFE2D6;
+    color: #444444;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.quizPopupChoiceActive {
+    background-color: #FF4D00;
+    color: #FFF;
+}
+
+.quizPopupChoiceWord {
+    width: 41px;
+    height: 41px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    color: #000;
+    font-size: 18px;
+}
+
+.quizPopupBtn {
+    border: 1px solid #FF4D00;
+    color: #FF4D00;
+    font-size: 22px;
+    border-radius: 6px;
+    padding: 15.5px;
+}

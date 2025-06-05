@@ -1,0 +1,194 @@
+.reputationCard {
+    width: calc(100% / 3 - 2 * 16px / 3);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0.6rem;
+    border-radius: 10px;
+    background: #fff;
+}
+
+@media (max-width:998px) {
+    .reputationCard {
+        width: calc(50% - 8px);
+    }
+}
+
+@media (max-width:700px) {
+    .reputationCard {
+        width: 100%;
+    }
+}
+
+.reputationCardHeader {
+    min-height: 102px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.reputationCardHeader img{
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.reputationCardLabel {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 0.9rem;
+    background-color: #FFF;
+    padding: 0.1rem 0.5rem;
+    border-radius: 2px;
+}
+
+.reputationCardLabel.live {
+    background-color: #194827;
+    color: #21FF63;
+}
+
+.reputationCardLabel.finished {
+    color: #FF4D00;
+}
+
+.reputationCardTitle {
+    position: relative;
+    font-size: 1.8rem;
+    color: #3A3A3A;
+}
+
+.reputationCardStats {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.reputationCardStatsInfo {
+    color: #707070;
+    font-size: 1.2rem;
+}
+
+.reputationCardStatsDiagram {
+    width: 100%;
+    background-color: #707070;
+    height: 7px;
+    border-radius: 3.5px;
+    display: flex;
+}
+
+.reputationCardStatsValue {
+    height: 100%;
+    background: linear-gradient(270deg, #FFFFFF -33.46%, #FF4D00 95.22%);
+    border-radius: 3.5px;
+}
+
+.reputationCardStatsBottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #3A3A3A;
+}
+
+.reputationCardStatsHighlitedText {
+    color: #FF4D00;
+}
+
+.reputationCardContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reputationCardGroup {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+}
+
+.reputationCardGroup:not(:last-child) {
+    border-bottom: 1px solid #BABABA;
+}
+
+.reputationCardItem {
+    font-size: 1.4rem;
+    color: #3A3A3A;
+}
+
+.reputationCardBtn {
+    background-color: #FDD9CA;
+    color: #FF4D00;
+    border: 1px solid #FF4D00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    padding: 0.55rem;
+}
+
+.reputationCardInfo{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reputationCardTooltip{
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #242424;
+    border: 1px solid #FDD9CA;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 1rem 1.5rem 1.3rem 1.5rem;
+    width: 230px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s opacity;
+}
+
+@media (max-width: 1350px) {
+    .reputationCardTooltip{
+        left: 0;
+        transform: translateX(0);
+    }
+}
+
+.reputationCardInfo:hover .reputationCardTooltip{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.reputationCardTooltipTitle{
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.reputationCardTooltipText{
+    font-size: 1.4rem;
+    color: #D1DFF2;
+    line-height: 1.14;
+}
+
+@media (any-hover: hover) {
+    .reputationCardInfo{
+        cursor: pointer;
+    }
+}

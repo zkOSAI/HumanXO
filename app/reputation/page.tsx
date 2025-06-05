@@ -1,174 +1,274 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import cn from "classnames";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import Image from "next/image";
+import Link from "next/link";
+
+import TabContent from "@/shared/components/TabContent";
 
 import styles from "../page.module.css";
-//import { useUsers } from "../queries/useUsers";
 
 import {
-
-  Face,
-
-  Menu,
-
-  Star,
- 
+    ArrowLeft,
+    ArrowRightCircle,
+    Congratulations,
+    Crown,
+    Flag,
+    Live,
 } from "@/shared/icons";
-import { useMobileMenu } from "../context/mobileContext";
-//import { join } from "../api/join";
+import Popup from "@/shared/components/Popup";
+import { RedWalletOptions } from "../component/RedWalletOptions";
 
-export default function HomePage() {
-  // const [connectedWallet, setConnectedWallet] = React.useState(false);
-  const { setMobileMenu} = useMobileMenu();
-  const { disconnect, connected, connecting } = useWallet();
-  const { setVisible } = useWalletModal();
-  //const data = useUsers();
+const questions = [
+    {
+        question: "Which gas is the lightest?",
+        answers: ["Oxygen", "Hydrogen ", "Nitrogen", "Carbon dioxide"],
+    },
+    {
+        question: "What planet is known as the Red Planet?",
+        answers: ["Jupiter", "Venus", "Mars "],
+    },
+];
 
-  //console.log("quizs", quizs);
-  const navigateToExtensionPage = () => {
-    window.open(`https://chrome.google.com/webstore`, "_blank");
-  };
+const Reputation = () => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [showPopup, setShowPopup] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [selectedAnswers, setSelectedAnswers] = useState<{
+        [key: number]: string;
+    }>({});
+    const percent = ((currentStep + 1) / (questions.length + 1)) * 100;
+    const isFinished = currentStep >= questions.length;
 
-  const connectPhantomWallet = async () => {
-    console.log("connection wallet");
-    setVisible(true);
-  };
+    const currentQuestion = questions[currentStep];
+    const selectedAnswer = selectedAnswers[currentStep];
 
-  const disconnectWallet = async () => {
-    disconnect();
-  };
+    const handleOpenPopup = () => {
+        setShowPopup(true);
+    };
 
-  return (
-    <>
-      <div className={styles.contentArea}>
-        <div className={styles.contentAreaWrapper}>
-          <div className={styles.contentAreaTop}>
-            <button
-              className={cn(styles.button, styles.contentAreaMenu)}
-              onClick={() => setMobileMenu(true)}
-            >
-              <Menu />
-            </button>
+    const handleClosePopup = () => {
+        setCurrentStep(0);
+        setSelectedAnswers({});
+        setShowPopup(false);
+    };
 
-            {connected ? (
-              <button
-                className={cn(styles.button, styles.connectButton)}
-                onClick={disconnectWallet}
-              >
-                Disonnect Wallet
-              </button>
-            ) : (
-              <button
-                className={cn(styles.button, styles.connectButton)}
-                onClick={connectPhantomWallet}
-                disabled={connecting}
-              >
-                {connecting ? "Connecting..." : "Connect Wallet"}
-              </button>
-            )}
-          </div>
+    const handleBack = () => {
+        if (currentStep == 0) {
+            return handleClosePopup();
+        }
 
-          {connected ? (
-            <div className={styles.dashboard}>
-              <div className={styles.dashboardInfo}>
-                <div className={styles.dashboardInfoCircle}></div>
+        setCurrentStep((prev) => prev - 1);
+    };
 
-                <p className={styles.dashboardInfoBread}>
-                  <Star />
-                  Reputation
-                </p>
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswers((prev) => ({
+            ...prev,
+            [currentStep]: prev[currentStep] === answer ? "" : answer,
+        }));
+    };
 
-                <button
-                  className={cn(styles.button, styles.dashboardInfoClaim)}
-                >
-                  Coming Soon
-                </button>
-              </div>
+    const handleNext = () => {
+        if (!isFinished) {
+            setCurrentStep((prev) => prev + 1);
+        }
+    };
 
-            
+    return (
+        <>
+            <div className={styles.contentArea}>
+                <div className={styles.contentAreaWrapper}>
+                    <div className={styles.contentAreaTop}>
+                        <RedWalletOptions />
+                    </div>
+                    <div className={styles.dashboard}>
+
+
+                        <div className={styles.dashboardWrapper}>
+                            <div
+                                className={cn(
+                                    styles.reputationBlock,
+                                    styles.reputationBlockRewards
+                                )}
+                            >
+                                <Image src="/img/rewards.png" alt="bg" fill />
+
+                                <div className={styles.reputationBlockContent}>
+                                    <p className={styles.reputationBlockTitle}>
+                                        750 ZKOS
+                                    </p>
+                                    <p className={styles.reputationBlockText}>
+                                        Total{" "}
+                                        <span className={styles.reputationBold}>
+                                            Rewards Distributed
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className={styles.reputationBlock}>
+                                <Image src="/img/burned.png" alt="bg" fill />
+
+                                <div className={styles.reputationBlockContent}>
+                                    <p className={styles.reputationBlockTitle}>
+                                        750 ZKOS
+                                    </p>
+                                    <p className={styles.reputationBlockText}>
+                                        Total{" "}
+                                        <span className={styles.reputationBold}>
+                                            Burned Tokens
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.reputationTabsWrapper}>
+                            <Link
+                                href="#"
+                                className={cn(
+                                    styles.reputationLeaderboard,
+                                    styles.item
+                                )}
+                            >
+                                <Crown width={18} />
+                                Leaderboard
+                            </Link>
+
+                            <div className={styles.reputationTabs}>
+                                <button
+                                    onClick={() => setActiveIndex(0)}
+                                    className={cn(
+                                        styles.item,
+                                        styles.reputationTab,
+                                        {
+                                            [styles.reputationTabActive]:
+                                                activeIndex == 0,
+                                        }
+                                    )}
+                                >
+                                    <Live width={18} />
+                                    Live
+                                </button>
+
+                                <button
+                                    onClick={() => setActiveIndex(1)}
+                                    className={cn(
+                                        styles.item,
+                                        styles.reputationTab,
+                                        {
+                                            [styles.reputationTabActive]:
+                                                activeIndex == 1,
+                                        }
+                                    )}
+                                >
+                                    <Flag width={18} />
+                                    Finished
+                                </button>
+                            </div>
+                        </div>
+                        {activeIndex == 0 ? (
+                            <TabContent handleOpenPopup={handleOpenPopup} />
+                        ) : (
+                            <p>No data</p>
+                        )}
+                    </div>
+                </div>
             </div>
-          ) : (
-            <div className={styles.welcome}>
-              <div className={styles.welcomeBlock}>
-                <div className={styles.welcomeCircle}></div>
 
-                <div className={styles.welcomeBlockContent}>
-                  <div className={styles.welcomeBlockTitleInner}>
-                    <p>Welcome to</p>
-
-                    <p>HumanXO by zkOS.</p>
-                  </div>
-
-                  <p className={styles.welcomeBlockText}>
-                    Connect and start improving your on-chain reputation:
-                  </p>
-
-                  <p className={styles.welcomeBlockText}>
-                    By engaging with HumanXO, users strengthen their on-chain
-                    identity, unlock rewards and contribute to a more
-                    Sybil-resistant blockchain.
-                  </p>
-
-                  {connected ? (
-                    <button
-                      className={cn(styles.button, styles.welcomeBlockConnect)}
-                      onClick={disconnectWallet}
-                    >
-                      Disonnect Wallet
-                    </button>
-                  ) : (
-                    <button
-                      className={cn(styles.button, styles.welcomeBlockConnect)}
-                      onClick={connectPhantomWallet}
-                      disabled={connecting}
-                    >
-                      {connecting ? "Connecting..." : "Connect Wallet"}
-                    </button>
-                  )}
+            <Popup isOpen={showPopup} onClose={handleClosePopup}>
+                <div className={styles.quizPopup}>
+                    <div className={styles.quizPopupHead}>
+                        <button
+                            onClick={handleBack}
+                            className={cn(styles.quizPopupBack, styles.item)}
+                        >
+                            <ArrowLeft width={36} />
+                        </button>
+                        <div className={styles.quizPopupSteps}>
+                            <span className={styles.quizPopupStepsHighlited}>
+                                0{currentStep + 1}
+                            </span>
+                            /
+                            <span className={styles.quizPopupStepsMax}>
+                                0{questions.length + 1}
+                            </span>
+                        </div>
+                    </div>
+                    <div className={styles.quizPopupBar}>
+                        <div
+                            className={styles.quizPopupBarValue}
+                            style={{ width: `${percent}%` }}
+                        ></div>
+                    </div>
+                    <div className={styles.quizPopupContent}>
+                        {isFinished ? (
+                            <>
+                                <p className={styles.quizPopupTitle}>
+                                    Congratulations! {currentStep + 1}/
+                                    {questions.length + 1}
+                                </p>
+                                <Congratulations width={122} />
+                                <button
+                                    onClick={handleClosePopup}
+                                    className={cn(
+                                        styles.quizPopupBtn,
+                                        styles.item
+                                    )}
+                                >
+                                    Back to Home
+                                    <ArrowRightCircle width={24} />
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <p className={styles.quizPopupTitle}>
+                                    {currentQuestion.question}
+                                </p>
+                                <div className={styles.quizPopupChoices}>
+                                    {currentQuestion.answers.map((answer) => (
+                                        <button
+                                            key={answer}
+                                            onClick={() => handleAnswer(answer)}
+                                            className={cn(
+                                                styles.quizPopupChoice,
+                                                {
+                                                    [styles.quizPopupChoiceActive]:
+                                                        selectedAnswer ==
+                                                        answer,
+                                                }
+                                            )}
+                                        >
+                                            <span
+                                                className={
+                                                    styles.quizPopupChoiceWord
+                                                }
+                                            >
+                                                A
+                                            </span>
+                                            {answer}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button
+                                    onClick={handleNext}
+                                    disabled={!selectedAnswer}
+                                    className={cn(
+                                        styles.quizPopupBtn,
+                                        styles.item
+                                    )}
+                                >
+                                    Submit Answer
+                                    <ArrowRightCircle width={24} />
+                                </button>
+                            </>
+                        )}
+                    </div>
                 </div>
-              </div>
+            </Popup>
+        </>
+    );
+};
 
-              <div className={styles.welcomeWrapper}>
-                <div className={styles.welcomeSolana}>
-                  <div className={styles.welcomeSolanaImg}>
-                    <Image src="/img/solana.png" alt="Solana" fill />
-                  </div>
-
-                  <div className={styles.welcomeSolanaText}>
-                    <p>Built on Solana,</p>
-
-                    <p>designed to increase</p>
-
-                    <p>on-chain human activity.</p>
-                  </div>
-                </div>
-
-                <div className={styles.welcomeExtension}>
-                  <Face className={styles.welcomeExtensionIcon} />
-
-                  <p className={styles.welcomeExtensionText}>
-                    Passively verify you&rsquo;re human, build reputation in the
-                    HumanXO ecosystem, and earn rewards.
-                  </p>
-
-                  <button
-                    className={cn(styles.button, styles.downloadExtension)}
-                    onClick={navigateToExtensionPage}
-                  >
-                    Download Browser Extension
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div></>
-
-
-
-  );
-}
+export default Reputation;
