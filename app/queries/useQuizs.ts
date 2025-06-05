@@ -1,18 +1,35 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getQuizs } from "../api/getQuizs";
+import { getQuizs } from "../api/getAllQuizs";
 
 export const useQuizs = () => {
-  const { data } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => getQuizs(),
-    refetchInterval: 4 * 1000, // optional: poll every 4s
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["quizzes"],
+    queryFn: getQuizs,
+    refetchInterval: 4000,
   });
-  if (data) {
-    console.log("getall quiz data ");
-    console.log(data);
-    return data;
-  }
-  return null;
+
+  const rookie = data
+    ?.filter((quiz: any) => quiz.level === "rookie")
+    .map((quiz: any, index: number) => ({
+      ...quiz,
+      index: index + 1, // 1-based index
+    })) || [];
+
+  const pro = data
+    ?.filter((quiz: any) => quiz.level === "pro")
+    .map((quiz: any, index: number) => ({
+      ...quiz,
+      index: index + 1,
+    })) || [];
+
+  const master = data
+    ?.filter((quiz: any) => quiz.level === "master")
+    .map((quiz: any, index: number) => ({
+      ...quiz,
+      index: index + 1,
+    })) || [];
+
+  return { rookie, pro, master, isLoading, error };
 };

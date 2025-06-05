@@ -82,7 +82,7 @@ const Reputation = () => {
                     <div className={styles.contentAreaTop}>
                         <RedWalletOptions />
                     </div>
-                    <div className={styles.dashboard}>
+                    {/* <div className={styles.dashboard}>
 
 
                         <div className={styles.dashboardWrapper}>
@@ -173,11 +173,11 @@ const Reputation = () => {
                         ) : (
                             <p>No data</p>
                         )}
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
-            <Popup isOpen={showPopup} onClose={handleClosePopup}>
+            {/* <Popup isOpen={showPopup} onClose={handleClosePopup}>
                 <div className={styles.quizPopup}>
                     <div className={styles.quizPopupHead}>
                         <button
@@ -266,7 +266,7 @@ const Reputation = () => {
                         )}
                     </div>
                 </div>
-            </Popup>
+            </Popup> */}
         </>
     );
 };

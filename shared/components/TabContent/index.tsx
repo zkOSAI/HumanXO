@@ -8,6 +8,7 @@ import { Card, CardType, Status } from "../../types/card";
 import CardItem from "../CardItem";
 
 import styles from "./index.module.css";
+import { useQuizs } from "@/app/queries/useQuizs";
 
 const cards: Card[] = [
     {
@@ -118,6 +119,12 @@ interface Props {
 
 const TabContent: React.FC<Props> = ({ handleOpenPopup }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+   const { rookie,pro, master, isLoading, error } = useQuizs();
+   console.log("rookie level:::",rookie);
+   console.log("pro level:::",pro);
+   console.log("master level:::",master);
+
+
 
     return (
         <>

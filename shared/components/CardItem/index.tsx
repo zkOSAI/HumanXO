@@ -21,6 +21,7 @@ import {
     Login,
     Star,
 } from "@/shared/icons";
+import { useQuizs } from "@/app/queries/useQuizs";
 
 interface Props {
     card: Card;
