@@ -8,6 +8,7 @@ export const useQuizs = () => {
     queryKey: ["quizzes"],
     queryFn: getQuizs,
     refetchInterval: 4000,
+    refetchIntervalInBackground: true,
   });
 
   const rookie = data

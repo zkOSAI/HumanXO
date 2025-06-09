@@ -28,21 +28,35 @@ interface Props {
     handleOpenPopup: () => void;
 }
 
+const rewardByLevel: Record<string, number> = {
+  rookie: 20,
+  pro: 40,
+  master: 100,
+};
+
+const XpByLevel: Record<string, number> = {
+  rookie: 10,
+  pro: 20,
+  master: 50,
+};
+
 const typeIcons = {
-    rokie: <CardType1 width={18} />,
+    rookie: <CardType1 width={18} />,
     pro: <CardType2 width={12} />,
     master: <CardType3 width={12} />,
 };
 
 const typePaths = {
-    rokie: "/img/type1.png",
+    rookie: "/img/type1.png",
     pro: "/img/type2.png",
     master: "/img/type3.png",
 };
 
 const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
-    const { name, percent, status, date, type, info } = card || {};
+    const { id, name, percent, status, type, info, maxUser, currentUser ,winner, level} = card || {};
+
     const { title, text } = info || {};
+    
 
     return (
         <div className={cn(styles.reputationCard, styles[type])}>
@@ -71,7 +85,7 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
                             Live Now
                         </>
                     )}
-                    {status == Status.Date && <>{date}</>}
+
                     {status == Status.Finished && (
                         <>
                             <Flag width={12} />
@@ -89,13 +103,13 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
             {status != Status.Live && (
                 <div className={styles.reputationCardStats}>
                     <p className={styles.reputationCardStatsInfo}>
-                        32/50 Participants
+                        {currentUser}/{maxUser} Participants
                     </p>
 
                     <div className={styles.reputationCardStatsDiagram}>
                         <div
                             className={styles.reputationCardStatsValue}
-                            style={{ width: `${percent}%` }}
+                            style={{ width: `${winner/currentUser*100}%` }}
                         ></div>
                     </div>
 
@@ -119,7 +133,7 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
                         )}
                     >
                         <Gift width={12} color={"#FF4D00"} />
-                        500 ZKOS
+                        {rewardByLevel[type] ?? 0} ZKOS
                     </div>
 
                     <div
@@ -140,7 +154,7 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
                             pageStyles.item
                         )}
                     >
-                        <CardKey width={12} color={"#FF4D00"} />5 ZKOS
+                        <CardKey width={12} color={"#FF4D00"} />{XpByLevel[type]  ?? 0} ZKOS
                     </div>
 
                     <div
@@ -149,7 +163,7 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
                             pageStyles.item
                         )}
                     >
-                        <Star width={12} color={"#FF4D00"} />5
+                        <Star width={12} color={"#FF4D00"} />{XpByLevel[type] ?? 0}
                     </div>
                 </div>
             </div>
@@ -165,5 +179,6 @@ const CardItem: React.FC<Props> = ({ card, handleOpenPopup }) => {
         </div>
     );
 };
+    console.log("🚀 ~ 100:", 100)
 
 export default CardItem;

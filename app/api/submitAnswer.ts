@@ -2,16 +2,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 type EthAddress = `0x${string}`;
 
-export const joinQuiz = async (address: EthAddress | undefined, id: string | undefined) => {
-    let toastId;
+export const submitAnswer = async (address: EthAddress | undefined, question: string | undefined, answer: string | undefined) => {
+
     try {
-        toastId = toast.loading("Waiting for response");
+
         const data = {
             address,
-            id
+            question,
+            answer
         };
+        console.log("🚀 ~ submitAnswer ~ data:", data)
         const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/quiz/join`,
+            `${process.env.NEXT_PUBLIC_BACKEND_API!}/api/quiz/submitAnswer`,
             data,
             {
                 headers: {
@@ -22,11 +24,10 @@ export const joinQuiz = async (address: EthAddress | undefined, id: string | und
             }
         );
         console.log(res.data)
-        toast.dismiss(toastId);
-        return res.data.success;
+
+        return res.data;
     } catch (error) {
-        toast.dismiss(toastId);
-        toast.error("Error")
+        console.log(error)
         return false;
 
     }

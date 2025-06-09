@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getUser = async (publicKey: any) => {
     const data = { publicKey };
     
-    console.log("🚀 ~ getUser ~ publicKey:", publicKey)
+    //console.log("🚀 ~ getUser ~ publicKey:", publicKey)
     const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API!}/api/users/info`, data, {
         headers: {
             'Content-Type': 'application/json',

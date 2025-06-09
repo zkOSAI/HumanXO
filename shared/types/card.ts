@@ -1,5 +1,5 @@
 export enum CardType {
-    Rokie = "rokie",
+    Rookie = "rookie",
     Pro = "pro",
     Master = "master",
 }
@@ -15,8 +15,12 @@ export interface Card {
     type: CardType;
     name: string;
     status: Status;
-    date: string;
     percent: number;
+    maxUser: number,
+    currentUser: number,
+    winner: number,
+    loser: number,
+    level: string,
     info?: {
         title: string;
         text: string;

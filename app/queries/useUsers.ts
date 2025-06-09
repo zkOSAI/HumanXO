@@ -12,7 +12,7 @@ export const useUsers = () => {
         enabled: !!address
     });
     if (data) { 
-        console.log("get user data ")
+        //console.log("get user data ")
         return data
     };
     return null

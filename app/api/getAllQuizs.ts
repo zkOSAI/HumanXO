@@ -14,7 +14,7 @@ export const getQuizs = async () => {
         },
       }
     );
-    //console.log(response.data.quizzes);
+    // console.log(response.data.quizzes);
     if (response.data) return response.data.quizzes;
     return null
   } catch (err) {
